@@ -1,12 +1,13 @@
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
+const axios = require('axios');
 
 const app = express();
 app.use(express.json());
 
 const relatosPorAvistamentoId = {};
 
-app.put('/avistamentos/:id/relatos', (req, res) => {
+app.put('/avistamentos/:id/relatos', async (req, res) => {
     const idObs = uuidv4();
     const { texto } = req.body;
 
@@ -17,6 +18,16 @@ app.put('/avistamentos/:id/relatos', (req, res) => {
 
     relatosPorAvistamentoId[req.params.id] =
         relatosDoAvistamento;
+
+        await axios.post('http://localhost:10000/eventos', {
+    tipo: "RelatoCriado",
+    dados: {
+        id: idObs,
+        texto,
+        confirmacoes: 0,
+        avistamentoId: req.params.id
+    }
+});
 
     res.status(201).send(relatosDoAvistamento);
 });

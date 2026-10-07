@@ -1,12 +1,13 @@
 const express = require ('express');
 const app = express();
+const axios = require('axios');
 app.use(express.json());
 const avistamentos = {};
 let contador = 0;
 app.get ('/avistamentos', (req, res) => {
     res.send(avistamentos);
 });
-app.put ('/avistamentos', (req, res) => {
+app.put('/avistamentos', async (req, res) => {
     const { local, descricao } = req.body;
     if (local === undefined) {
     return res.status(400).send({
@@ -38,6 +39,15 @@ avistamentos[contador] = {
     local,
     descricao
 };
+
+await axios.post('http://localhost:10000/eventos', {
+    tipo: "AvistamentoCriado",
+    dados: {
+        id: contador,
+        local,
+        descricao
+    }
+});
 
 res.status(201).send(avistamentos[contador]);
 });
