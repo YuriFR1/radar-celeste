@@ -33,15 +33,13 @@ if (descricao === "") {
 }
 contador++;
 
-const id = contador;
-
-avistamentos[id] = {
-    id,
+avistamentos[contador] = {
+    id: contador,
     local,
     descricao
 };
 
-res.status(201).send(avistamentos[id]);
+res.status(201).send(avistamentos[contador]);
 });
 app.listen(4000, () => {
 console.log('Avistamentos. Porta 4000');
