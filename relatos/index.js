@@ -25,6 +25,10 @@ app.get('/avistamentos/:id/relatos', (req, res) => {
      res.send(relatosPorAvistamentoId[req.params.id] || []);
 
 });
+app.post("/eventos", (req, res) => {
+    console.log("Evento recebido: " + req.body.tipo);
+    res.status(200).send({ msg: "ok" });
+});
 app.listen(4100, () => {
     console.log('Relatos. Porta 4100');
 });

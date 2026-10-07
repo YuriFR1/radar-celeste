@@ -41,6 +41,10 @@ avistamentos[contador] = {
 
 res.status(201).send(avistamentos[contador]);
 });
+app.post("/eventos", (req, res) => {
+    console.log("Evento recebido: " + req.body.tipo);
+    res.status(200).send({ msg: "ok" });
+});
 app.listen(4000, () => {
 console.log('Avistamentos. Porta 4000');
 });
